@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trivia!</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Rye|Sura" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+       
+        body {
+            background-image: url("assets/images/positive.png");
+            text-align: center;
+        }
+
+    
+    </style>
+
+</head>
+
+<body>
+
+        <div class="container">
+               
+                <div class="jumbotron jumbotron-fluid">
+                  <div class="container">
+                  <div id="game">
+                    <h2>a COMPLETELY random trivia game!</h2>
+                    <p id="remaining-time" class="lead">Remaining Time: <span id="timer"></span></p>
+                    <p id="question" class="lead"></p>
+                  </div>
+                  <div id="results">
+                  </div>
+                </div>
+          
+                <div class="row">
+                  <div id="choices" class="text-center">
+                      <div style="text-align: center;">
+                    <button id="start" class="btn btn-primary" style="text-align:center;display:block;">Start Game</button>
+                    </div>
+                    <div id="options">
+                      
+                    </div>
+                    
+                  </div>
+                </div>
+          
+              </div>
+
+
+
+
+
+
+    <script src="assets/app.js"></script>
+</body>
+
+</html>
