@@ -45,6 +45,8 @@ var trivia = {
         q7: "40"
       },
 
+      
+
 //functions go here
 startGame: function(){
     
@@ -59,6 +61,7 @@ startGame: function(){
     $('#timer').text(trivia.timer);
     $('#start').hide();
     $('#remaining-time').show();
+    $('#gifs').empty()
     
     trivia.nextQuestion();  
   },
@@ -77,8 +80,10 @@ startGame: function(){
     
     var questionContent = Object.values(trivia.questions)[trivia.currentSet];
     $('#question').text(questionContent);
-  
+    
+    
     var questionOptions = Object.values(trivia.options)[trivia.currentSet];
+    
     
     $.each(questionOptions, function(index, key){
       $('#options').append($('<button class="option btn btn-info btn-lg">'+key+'</button>'));
@@ -87,7 +92,7 @@ startGame: function(){
   },
   
   timerRunning : function(){
-   
+    
     if(trivia.timer > -1 && trivia.currentSet < Object.keys(trivia.questions).length){
       $('#timer').text(trivia.timer);
       trivia.timer--;
@@ -95,16 +100,18 @@ startGame: function(){
           $('#timer').addClass('last-seconds');
         }
     }
-    
+   
     else if(trivia.timer === -1){
       trivia.unanswered++;
       trivia.result = false;
       clearInterval(trivia.timerId);
-      resultId = setTimeout(trivia.guessResult, 1000);
+      resultId = setTimeout(trivia.guessResult, 4000);
       $('#results').html('<h3>Too Slow! The right answer was '+ Object.values(trivia.answers)[trivia.currentSet] +'</h3>');
+      $("#gifs").html("<img src='https://media.giphy.com/media/3ohuADRdKZgi8Xu7ni/giphy.gif'>")
     }
-   
+    
     else if(trivia.currentSet === Object.keys(trivia.questions).length){
+      
       
       $('#results')
         .html('<h3>All Done!</h3>'+
@@ -118,45 +125,56 @@ startGame: function(){
       
       
       $('#start').show();
+      $("#gifs").html("<img src='https://media.giphy.com/media/8JW82ndaYfmNoYAekM/giphy.gif'>")
     }
     
   },
- 
+  
   guessChecker : function() {
     
-   
+    
     var resultId;
+    
+
     var currentAnswer = Object.values(trivia.answers)[trivia.currentSet];
     
-  
+    
     if($(this).text() === currentAnswer){
       $(this).addClass('btn-success').removeClass('btn-info');
       
       trivia.correct++;
       clearInterval(trivia.timerId);
-      resultId = setTimeout(trivia.guessResult, 5000);
+      resultId = setTimeout(trivia.guessResult, 3000);
       $('#results').html('<h3>GOOD JOB!</h3>');
+      $('#gifs').html("<img src='https://media.giphy.com/media/OcZp0maz6ALok/giphy.gif'>")
     }
-  
+    
     else{
+      
       $(this).addClass('btn-danger').removeClass('btn-info');
       
       trivia.incorrect++;
       clearInterval(trivia.timerId);
-      resultId = setTimeout(trivia.guessResult, 5000);
+      resultId = setTimeout(trivia.guessResult, 3000);
       $('#results').html('<h3>WRONG! '+ currentAnswer +'</h3>');
+      $("#gifs").html("<img src='https://media.giphy.com/media/l2JhLaxhWba6OivE4/giphy.gif'>")
     }
     
   },
   
   guessResult : function(){
     
+    
     trivia.currentSet++;
+    
     
     $('.option').remove();
     $('#results h3').remove();
+    $('#gifs').empty()
+    
     
     trivia.nextQuestion();
+     
   }
 
 }
