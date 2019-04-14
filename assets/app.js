@@ -1,9 +1,9 @@
 $(document).ready(function(){
 
 //on click events n stuff are gonna go here
-$("#remaining-time").hide();
+$("#time-remaining").hide();
 $("#start").on('click', trivia.startGame);
-$(document).on('click' , '.option', trivia.guessChecker);
+$(document).on('click' , '.option', trivia.answerCheck);
 })
 //set ur variables 
 
@@ -25,7 +25,7 @@ var trivia = {
         q7: "How many spaces are on a standard Monopoly board?"
       },
 
-      options: {
+      choices: {
         q1: ["Mooing", "Listening to relaxing music", "in a warm barn", "absent a history of being tipped over"],
         q2: ["Apres", "Shatner", "Bob", "Tundra"],
         q3: ["Brer Rabbit", "Bugs Bunny", "Easter Bunny", "None, they're all hares"],
@@ -60,7 +60,7 @@ startGame: function(){
     $('#results').html('');
     $('#timer').text(trivia.timer);
     $('#start').hide();
-    $('#remaining-time').show();
+    $('#time-remaining').show();
     $('#gifs').empty()
     
     trivia.nextQuestion();  
@@ -82,11 +82,11 @@ startGame: function(){
     $('#question').text(questionContent);
     
     
-    var questionOptions = Object.values(trivia.options)[trivia.currentSet];
+    var questionchoices = Object.values(trivia.choices)[trivia.currentSet];
     
     
-    $.each(questionOptions, function(index, key){
-      $('#options').append($('<button class="option btn btn-info btn-lg">'+key+'</button>'));
+    $.each(questionchoices, function(index, key){
+      $('#choices').append($('<button class="option btn btn-info btn-lg">'+key+'</button>'));
     })
     
   },
@@ -105,7 +105,7 @@ startGame: function(){
       trivia.unanswered++;
       trivia.result = false;
       clearInterval(trivia.timerId);
-      resultId = setTimeout(trivia.guessResult, 4000);
+      resultId = setTimeout(trivia.resetQuestions, 4000);
       $('#results').html('<h3>Too Slow! The right answer was '+ Object.values(trivia.answers)[trivia.currentSet] +'</h3>');
       $("#gifs").html("<img src='https://media.giphy.com/media/3ohuADRdKZgi8Xu7ni/giphy.gif'>")
     }
@@ -130,7 +130,7 @@ startGame: function(){
     
   },
   
-  guessChecker : function() {
+  answerCheck : function() {
     
     
     var resultId;
@@ -144,7 +144,7 @@ startGame: function(){
       
       trivia.correct++;
       clearInterval(trivia.timerId);
-      resultId = setTimeout(trivia.guessResult, 3000);
+      resultId = setTimeout(trivia.resetQuestions, 3000);
       $('#results').html('<h3>GOOD JOB!</h3>');
       $('#gifs').html("<img src='https://media.giphy.com/media/OcZp0maz6ALok/giphy.gif'>")
     }
@@ -155,14 +155,14 @@ startGame: function(){
       
       trivia.incorrect++;
       clearInterval(trivia.timerId);
-      resultId = setTimeout(trivia.guessResult, 3000);
+      resultId = setTimeout(trivia.resetQuestions, 3000);
       $('#results').html('<h3>WRONG! '+ currentAnswer +'</h3>');
       $("#gifs").html("<img src='https://media.giphy.com/media/l2JhLaxhWba6OivE4/giphy.gif'>")
     }
     
   },
   
-  guessResult : function(){
+  resetQuestions : function(){
     
     
     trivia.currentSet++;
